@@ -1,7 +1,9 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'mainapp/index.html')
+    title = 'жопа'
+    ctx = {'title': title,}
+    return render(request, 'mainapp/index.html', ctx)
 
 def products(request):
     return render(request, 'mainapp/products.html')

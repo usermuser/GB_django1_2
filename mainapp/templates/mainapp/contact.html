@@ -1,20 +1,11 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
-	{% block title %}<title>Контакты</title>{% endblock  %}
+	{% block title %}Контакты{% endblock  %}
 
     {% block content %}
 		<div class="slider">
-			<div class="header clearfix">
-				<a href="/" class="logo"></a>
-				<ul class="menu">
-					<li><a href="/" class="active">домой</a></li>
-					<li><a href="/products/">продукты</a></li>
-					<li><a href="/contact/">контакты</a></li>
-				</ul>
-				<a href="#" class="search"></a>
-                <a href="#" class="basket"></a>
-			</div>
+			{% include 'mainapp/includes/header_clearfix.html' %}
 			<h1>наши контакты</h1>
 		</div>
 
