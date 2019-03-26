@@ -1,12 +1,24 @@
 from django.shortcuts import render
+import json
 
 def index(request):
-    title = 'жопа'
+    title = 'Главная'
     ctx = {'title': title,}
     return render(request, 'mainapp/index.html', ctx)
 
 def products(request):
-    return render(request, 'mainapp/products.html')
+    with open ('docs/links_menu.json') as data:
+        links_menu = json.load(data)
+
+    print(links_menu)
+    title = 'Каталог'
+    ctx = {'title': title,
+           'links_menu': links_menu,
+           }
+    return render(request, 'mainapp/products.html', ctx)
 
 def contact(request):
-    return render(request, 'mainapp/contact.html')
+    title = 'Контакты'
+    ctx = {'title': title,
+           }
+    return render(request, 'mainapp/contact.html', ctx)
