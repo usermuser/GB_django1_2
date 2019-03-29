@@ -7,8 +7,8 @@
             </a>
         </li>
 
-        <li><a href="{% url 'products' %}"
-               class="{% if request.path == '/products/' %}active{% endif %}">продукты
+        <li><a href="{% url 'mainapp:all_products_descending_order' %}"
+               class="{% if request.path == '/products/' %}active{% endif %}">магазин
             </a>
         </li>
 
