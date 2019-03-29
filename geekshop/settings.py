@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
+# get project path
+# ...os.path.dirname(BASE_DIR)
+
 
 import os
 
@@ -124,3 +127,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+
+MEDIA_URL = '/media/'
+PROJ_DIR = os.path.dirname(BASE_DIR)
+MEDIA_ROOT = os.path.join(PROJ_DIR, 'media')
