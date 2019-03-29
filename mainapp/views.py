@@ -1,12 +1,42 @@
 from django.shortcuts import render
 from django.urls import resolve
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import ProductCategory, Product
-import json
 import datetime
+
 
 now = datetime.datetime.now()
 current_year = now.year
+
+def seed_db(request):
+    ProductCategory.objects.all().delete()
+    Product.objects.all().delete()
+
+    cat1 = ProductCategory()
+    cat1.name = 'категория1'
+    cat1.description = 'описания категории 1 бла бла бла 12314123'
+    cat1.save()
+
+    prod1 = Product()
+    prod1.name = 'product1 имя'
+    prod1.category = cat1
+    prod1.save()
+
+    print('[+] Created {}, {}'.format(cat1.name, prod1.name))
+
+    cat2 = ProductCategory()
+    cat2.name = 'категория22222'
+    cat2.description = 'описаия егории 2 22222222222 бла 12314123'
+    cat2.save()
+
+    prod2 = Product()
+    prod2.name = 'prod222222222'
+    prod2.category = cat2
+    prod2.save()
+
+    print('[+] Created {}, {}'.format(cat2.name, prod2.name))
+    return HttpResponse('<h1> Done! </h1> ')
+
 
 
 def categories(request, pk=None):

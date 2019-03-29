@@ -22,15 +22,8 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('', mainapp.index, name='main'),
-
-    # {% url 'mainapp:urlname' %}
-    # http://127.0.0.1:8000/products/
     path('products/', include('mainapp.urls', namespace='mainapp',)),
-
-    # {% url 'mainapp:urlname' %}
-    # http://127.0.0.1:8000/category/
-    # path('category/', include('mainapp.urls', namespace='mainapp',)),
-
+    path('seed_db', mainapp.seed_db),
     path('contact/', mainapp.contact, name='contact'),
     path('admin/', admin.site.urls),
 ]
