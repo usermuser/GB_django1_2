@@ -71,7 +71,7 @@ def products(request, pk=None):
 
     ctx = {'title': title,
            'categories': categories,
-           'products':products,
+           'products': products,
            'current_year': current_year, }
 
     return render(request, 'mainapp/products.html', ctx)
