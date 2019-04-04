@@ -8,7 +8,7 @@ import datetime
 now = datetime.datetime.now()
 current_year = now.year
 
-def seed_db(request):
+def seed_db(request): # это код больше не нужен, делаю через management
     ProductCategory.objects.all().delete()
     Product.objects.all().delete()
 
