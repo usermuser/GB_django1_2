@@ -33,6 +33,16 @@ class ShopUserRegisterForm(UserCreationForm):
 
             return data
 
+        def too_old(self):
+            data = self.too_old['age']
+            if data > 70:
+                raise forms.ValidationError('Вы слишком стары!')
+
+        def is_num(self):
+            data = self.too_old['age']
+            if not isinstance(data, int):
+                raise forms.ValidationError('Введите число!')
+
 
 class ShopUserChangeForm(UserChangeForm):
     class Meta:
