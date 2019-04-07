@@ -1,5 +1,5 @@
 {% extends 'authapp/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 
 {% block content %}
@@ -9,5 +9,11 @@
         <br>
         <input class="form-control" type="submit" value="войти">
     </form>
+
+    <br>
+
+    <button class="btn btn-round form-control">
+            <a href="{% url 'authapp:register' %}" class=""> зарегистрироваться </a>
+    </button>
 
 {% endblock %}
