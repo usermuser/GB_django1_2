@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import resolve
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import ProductCategory, Product
+from django.shortcuts import get_object_or_404
 import datetime
 
 
@@ -62,17 +63,31 @@ def index(request):
 
 
 def products(request, pk=None):
-    title = 'Каталог'
+    title = 'продукты'
     categories = ProductCategory.objects.order_by('name')
-    if pk is not None:
-        products = Product.objects.filter(pk=pk)
-    else:
-        products = Product.objects.order_by('-price')
 
-    ctx = {'title': title,
-           'categories': categories,
-           'products': products,
-           'current_year': current_year, }
+    if pk is not None:
+        if pk == 0:
+            products = Product.objects.all().order_by('price')
+            category = {'name': 'все'}
+        else:
+            category = get_object_or_404(ProductCategory, pk=pk)
+            products = Product.objects.filter(category__pk=pk).order_by('price')
+
+        ctx = {'title': title,
+               'categories': categories,
+               'category': category,
+               'products': products,
+               'current_year': current_year, }
+
+        return render(request, 'mainapp/products.html', ctx)
+
+    same_products = Product.objects.all()[3:5]
+
+    ctx = {
+        'title': title,
+        'categories': categories,
+        'same_products': same_products,}
 
     return render(request, 'mainapp/products.html', ctx)
 
