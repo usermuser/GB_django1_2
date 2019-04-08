@@ -44,9 +44,9 @@ def categories(request, pk=None):
     if pk is None:
         return HttpResponseRedirect('/')
     else:
-        categories = ProductCategory.objects.order_by('name')
+        links_menu = ProductCategory.objects.order_by('name')
         current_category = ProductCategory.objects.get(pk=pk)
-        ctx = {'categories': categories,
+        ctx = {'links_menu': links_menu,
                'current_category': current_category, }
         return render(request, 'mainapp/category.html', ctx)
 
@@ -64,7 +64,7 @@ def index(request):
 
 def products(request, pk=None):
     title = 'продукты'
-    categories = ProductCategory.objects.order_by('name')
+    links_menu = ProductCategory.objects.order_by('name')
 
     if pk is not None:
         if pk == 0:
@@ -75,7 +75,7 @@ def products(request, pk=None):
             products = Product.objects.filter(category__pk=pk).order_by('price')
 
         ctx = {'title': title,
-               'categories': categories,
+               'links_menu': links_menu,
                'category': category,
                'products': products,
                'current_year': current_year, }
@@ -86,7 +86,7 @@ def products(request, pk=None):
 
     ctx = {
         'title': title,
-        'categories': categories,
+        'links_menu': links_menu,
         'same_products': same_products,}
 
     return render(request, 'mainapp/products.html', ctx)
