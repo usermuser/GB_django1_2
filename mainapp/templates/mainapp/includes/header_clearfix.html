@@ -1,0 +1,39 @@
+<div class="header clearfix">
+    <a href="/" class="logo"></a>
+    <ul class="menu">
+
+        <li><a href="{% url 'main' %}"
+               class="{% if request.path == '/' %}active{% endif %}">домой
+            </a>
+        </li>
+
+        <li><a href="{% url 'mainapp:all_products_descending_order' %}"
+               class="{% if request.path == '/products/' %}active{% endif %}">магазин
+            </a>
+        </li>
+
+        <li><a href="{% url 'contact' %}"
+                class="{% if request.path == '/contact/' %}active{% endif %}">контакты</a></li>
+
+
+        {% if user.is_authenticated %}
+            <li>
+                <a href="{% url 'authapp:edit' %}">edit</a>
+            </li>
+            <li>
+                <a href="{% url 'authapp:logout' %}">выйти</a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{% url 'authapp:login' %}">вход/регистрация</a>
+            </li>
+{#            <li>#}
+{#                <a href="{% url 'authapp:register' %}">регистрация</a>#}
+{#            </li>#}
+        {% endif %}
+    </ul>
+    <a href="#" class="search"></a>
+    <a href="#" class="basket"></a>
+
+
+</div>
