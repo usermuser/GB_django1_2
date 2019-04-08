@@ -64,7 +64,11 @@ def products(request, pk=None):
     title = 'продукты'
     links_menu = ProductCategory.objects.order_by('name')
 
-    if pk is not None:
+    basket = []
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
+
+    if pk:
         if pk == 0:
             products = Product.objects.all().order_by('price')
             category = {'name': 'все'}
@@ -76,7 +80,8 @@ def products(request, pk=None):
                'links_menu': links_menu,
                'category': category,
                'products': products,
-               'current_year': current_year, }
+               'current_year': current_year,
+               'basket': basket,}
 
         return render(request, 'mainapp/products_list.html', ctx)
 
@@ -85,7 +90,8 @@ def products(request, pk=None):
     ctx = {
         'title': title,
         'links_menu': links_menu,
-        'same_products': same_products,}
+        'same_products': same_products,
+        'basket': basket,}
 
     return render(request, 'mainapp/products_list.html', ctx)
 
