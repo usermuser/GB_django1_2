@@ -40,17 +40,15 @@ def seed_db(request): # это код больше не нужен, делаю �
 
 
 
-def categories(request, pk=None):
-    if pk is None:
-        return HttpResponseRedirect('/')
-    else:
-        links_menu = ProductCategory.objects.order_by('name')
-        current_category = ProductCategory.objects.get(pk=pk)
-        ctx = {'links_menu': links_menu,
-               'current_category': current_category, }
-        return render(request, 'mainapp/category.html', ctx)
+# def categories(request, pk=None):
+#     if pk is None:
+#         return HttpResponseRedirect('/')
+#     else:
+#         links_menu = ProductCategory.objects.order_by('name')
+#         ctx = {'links_menu': links_menu,}
+#         return render(request, 'mainapp/category.html', ctx)
 
-def index(request):
+def main(request):
     current_url = resolve(request.path_info).url_name
     title = 'Главная'
 
@@ -80,7 +78,7 @@ def products(request, pk=None):
                'products': products,
                'current_year': current_year, }
 
-        return render(request, 'mainapp/products.html', ctx)
+        return render(request, 'mainapp/products_list.html', ctx)
 
     same_products = Product.objects.all()[3:5]
 
@@ -89,7 +87,7 @@ def products(request, pk=None):
         'links_menu': links_menu,
         'same_products': same_products,}
 
-    return render(request, 'mainapp/products.html', ctx)
+    return render(request, 'mainapp/products_list.html', ctx)
 
 
 def contact(request):

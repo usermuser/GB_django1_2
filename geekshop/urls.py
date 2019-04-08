@@ -21,8 +21,8 @@ from django.conf.urls.static import static
 from django.conf.urls import include
 
 urlpatterns = [
-    path('', mainapp.index, name='main'),
-    path('products/', include('mainapp.urls', namespace='mainapp',)),
+    path('', mainapp.main, name='main'),
+    path('products/', include('mainapp.urls', namespace='products',)),
     path('authapp/', include('authapp.urls', namespace='authapp',)),
 
     path('seed_db', mainapp.seed_db),

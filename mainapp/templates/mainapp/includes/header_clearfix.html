@@ -7,13 +7,21 @@
             </a>
         </li>
 
-        <li><a href="{% url 'mainapp:all_products_descending_order' %}"
-               class="{% if request.path == '/products/' %}active{% endif %}">магазин
-            </a>
+        <li>
+              <a href="{% url 'products:index' %}"
+                 class="{% if request.resolver_match.namespace == 'products' %}
+                          active
+                        {% endif %}">
+                продукты
+              </a>
         </li>
 
-        <li><a href="{% url 'contact' %}"
-                class="{% if request.path == '/contact/' %}active{% endif %}">контакты</a></li>
+
+        <li>
+            <a href="{% url 'contact' %}"
+                class="{% if request.path == '/contact/' %}active{% endif %}">контакты
+            </a>
+        </li>
 
 
         {% if user.is_authenticated %}
