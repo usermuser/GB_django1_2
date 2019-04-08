@@ -44,8 +44,8 @@ def categories(request, pk=None):
         return HttpResponseRedirect('/')
     else:
         categories = ProductCategory.objects.order_by('name')
-        current_category=ProductCategory.objects.get(pk=pk)
-        ctx = {'categories':categories,
+        current_category = ProductCategory.objects.get(pk=pk)
+        ctx = {'categories': categories,
                'current_category': current_category, }
         return render(request, 'mainapp/category.html', ctx)
 
