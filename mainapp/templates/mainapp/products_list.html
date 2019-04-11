@@ -56,7 +56,8 @@
             <h3>{{ hot_product.name }}</h3>
             <h3>{{ hot_product.price }} <span>руб</span></h3>
             <h4>
-                <a href="{% url 'basket:add' hot_product.pk %}"></a>
+                <a href="{% url 'basket:add' 3 %}"></a>
+{#                <a href="{% url 'basket:add' hot_product.pk %}"></a>#}
             </h4>
             <p>{{ hot_product.description }}</p>
       </div>

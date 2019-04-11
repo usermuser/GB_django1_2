@@ -20,11 +20,10 @@ def get_basket(user):
 
 def get_hot_product():
     products = Product.objects.all()
-    # products_list = list(products)
-    # print('products_list: ', products_list)
-    # s = random.choice(products_list)
-    # print('choise is: ', s)
-    return random.sample(list(products), 1)[0]
+    products_list = list(products)
+    _hot_product = random.choice(products_list) # i think its more elegant
+    return _hot_product
+
 
 
 def get_same_products(hot_product):
@@ -48,6 +47,15 @@ def products(request, pk=None):
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
             products = Product.objects.filter(category__pk=pk).order_by('price')
+
+
+        ctx = {'title': title,
+            'links_menu': links_menu,
+            'category': category,
+            'products': products,}
+
+        return render(request, 'mainapp/products_list.html', ctx)
+
 
     hot_product = get_hot_product()
     same_products = get_same_products(hot_product)
