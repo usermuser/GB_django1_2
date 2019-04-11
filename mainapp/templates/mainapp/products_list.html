@@ -34,18 +34,20 @@
                       </div>
 
                       <div class="category-products clearfix">
-                                  {% for product in products %}
-                                    <div class="block">
-                                      <a href="{% url 'basket:add' product.pk %}">
-                                        <img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
-                                        <div class="text">
-                                          <img src="{% static 'img/icon-hover.png' %}" alt="hover">
-                                          <h4>{{ product.name }}</h4>
-                                          <p>{{ product.description }} </p>
-                                        </div>
-                                      </a>
+                              {% for product in products %}
+
+                                <div class="block">
+                                    <div class="text">
+{#                                      <img src="{% static 'img/icon-hover.png' %}" alt="hover">#}
+                                      <h4>{{ product.name }}</h4>
+                                      <p>{{ product.description }} </p>
                                     </div>
-                                  {% endfor %}
+                                    <a href="{% url 'basket:add' product.pk %}">Add to basket</a>
+                                    <img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+
+
+                                </div>
+                              {% endfor %}
                       </div>
 
             </div>

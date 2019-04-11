@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
+print('stat=',STATICFILES_DIRS)
 
 MEDIA_URL = '/media/'
 PROJ_DIR = os.path.dirname(BASE_DIR)
