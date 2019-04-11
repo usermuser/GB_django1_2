@@ -4,8 +4,14 @@ from mainapp.models import Product
 
 # просмотр корзины
 def basket(request):
-    ctx = {}
-    return render(request, 'basketapp/basket.html', ctx)
+    title = 'корзина'
+    basket_items = Basket.objects.filter(user=request.user).\
+                                    order_by('product__category')
+    ctx = {'title':title,
+           'basket_items': basket_items}
+
+    return render(request, 'basket/base.html', ctx)
+
 
 # добавить товар в корзину, сначала найдя его по pk
 def basket_add(request, pk):
@@ -23,7 +29,9 @@ def basket_add(request, pk):
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-# удалить товар из корзины
+
 def basket_remove(request, pk):
-    ctx = {}
-    return render(request, 'basketapp/basket.html', ctx)
+    basket_record = get_object_or_404(Basket, pk=pk)
+    basket_record.delete()
+
+    return HttpResponseRedirect(request.META.get['HTTP_REFERER'])
