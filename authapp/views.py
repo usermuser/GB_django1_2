@@ -15,7 +15,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user.is_active:
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('mainapp:all_products_descending_order'))
+            return HttpResponseRedirect(reverse('mainapp:index'))
 
     ctx = {'title': title, 'login_form': login_form}
     return render(request, 'authapp/login.html', ctx)
