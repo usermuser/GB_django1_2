@@ -20,8 +20,13 @@ def get_basket(user):
 
 def get_hot_product():
     products = Product.objects.all()
+
     products_list = list(products)
-    _hot_product = random.choice(products_list) # i think its more elegant
+    if products_list:
+        _hot_product = random.choice(products_list) # i think its more elegant
+    else:
+        _hot_product = ['You forgot to fill db!']
+
     return _hot_product
 
 
