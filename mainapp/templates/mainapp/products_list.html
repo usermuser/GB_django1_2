@@ -36,19 +36,17 @@
                     {% endif %}
 
                       <div class="category-products clearfix">
+
                               {% for product in products %}
-
-                                <div class="block">
-                                    <div class="text">
-{#                                      <img src="{% static 'img/icon-hover.png' %}" alt="hover">#}
-                                      <h4>{{ product.name }}</h4>
-                                      <p>{{ product.description }} </p>
+                                    <div class="block">
+                                        <div class="text">
+    {#                                      <img src="{% static 'img/icon-hover.png' %}" alt="hover">#}
+                                          <h4>{{ product.name }}</h4>
+                                          <p>{{ product.description }} </p>
+                                        </div>
+                                        <a href="{% url 'mainapp:product' product.pk %}">подробнее</a>
+                                        <img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
                                     </div>
-                                    <a href="{% url 'basket:add' product.pk %}">Add to basket</a>
-                                    <img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
-
-
-                                </div>
                               {% endfor %}
                       </div>
 
@@ -60,7 +58,11 @@
                 <h3>{{ hot_product.name }}</h3>
                 <h3>{{ hot_product.price }} <span>руб</span></h3>
                 <h4>
-                    <a href="{% url 'basket:add' 3 %}"></a>
+{#                    <a href="{% url 'basket:add' %}"></a>#}
+                    <a href="{% url 'mainapp:product' hot_product.pk %}">
+                        подробнее
+                    </a>
+
     {#                <a href="{% url 'basket:add' hot_product.pk %}"></a>#}
                 </h4>
                 <p>{{ hot_product.description }}</p>

@@ -1,14 +1,13 @@
 from django.urls import path, include
 
-from mainapp import views
+import mainapp.views as mainapp
 
 
 app_name = 'mainapp'
 
 urlpatterns = [
-    path('', views.products, name='index'),
-    path('<int:pk>', views.products, name='category'),
-
-
+    path('', mainapp.products, name='index'),  # show products
+    path('<int:pk>', mainapp.products, name='category'),
+    path('product/<int:pk>/', mainapp.product, name='product'),  # show product details
 ]
 

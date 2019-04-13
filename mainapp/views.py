@@ -53,7 +53,6 @@ def products(request, pk=None):
             category = get_object_or_404(ProductCategory, pk=pk)
             products = Product.objects.filter(category__pk=pk).order_by('price')
 
-
         ctx = {'title': title,
             'links_menu': links_menu,
             'category': category,
@@ -61,9 +60,9 @@ def products(request, pk=None):
 
         return render(request, 'mainapp/products_list.html', ctx)
 
-
     hot_product = get_hot_product()
     same_products = get_same_products(hot_product)
+    # same_products = Product.objects.all()[3:5]
 
     ctx = {'title': title,
             'links_menu': links_menu,
@@ -73,16 +72,17 @@ def products(request, pk=None):
 
     return render(request, 'mainapp/products_list.html', ctx)
 
-    same_products = Product.objects.all()[3:5]
+
+def product(request, pk):
+    title = 'детали'
 
     ctx = {
         'title': title,
-        'links_menu': links_menu,
-        'same_products': same_products,
-        'basket': basket}
-
-    return render(request, 'mainapp/products_list.html', ctx)
-
+        'links_menu': ProductCategory.objects.all(),
+        'product': get_object_or_404(Product, pk=pk),
+        'basket': get_basket(request.user),
+    }
+    return render(request, 'mainapp/product.html', ctx)
 
 def seed_db(request): # это код больше не нужен, делаю через management
     ProductCategory.objects.all().delete()
