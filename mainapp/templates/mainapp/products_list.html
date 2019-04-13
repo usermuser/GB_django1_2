@@ -27,11 +27,13 @@
             </div>
 
             <div class="products_list">
-                      <div class="title clearfix">
-                        <h2>
-                          Категория: "{{ category.name|title }}"
-                        </h2>
-                      </div>
+                    {% if category %}
+                          <div class="title clearfix">
+                            <h2>
+                              Категория: "{{ category.name|title }}"
+                            </h2>
+                          </div>
+                    {% endif %}
 
                       <div class="category-products clearfix">
                               {% for product in products %}
@@ -52,14 +54,17 @@
 
             </div>
 
-            <h1>Hot products below</h1>
-            <h3>{{ hot_product.name }}</h3>
-            <h3>{{ hot_product.price }} <span>руб</span></h3>
-            <h4>
-                <a href="{% url 'basket:add' 3 %}"></a>
-{#                <a href="{% url 'basket:add' hot_product.pk %}"></a>#}
-            </h4>
-            <p>{{ hot_product.description }}</p>
+            {% if hot_product %}
+                <br><br>
+                <h1>Hot products below</h1>
+                <h3>{{ hot_product.name }}</h3>
+                <h3>{{ hot_product.price }} <span>руб</span></h3>
+                <h4>
+                    <a href="{% url 'basket:add' 3 %}"></a>
+    {#                <a href="{% url 'basket:add' hot_product.pk %}"></a>#}
+                </h4>
+                <p>{{ hot_product.description }}</p>
+            {% endif %}
       </div>
 
       <div class="clr"></div>
