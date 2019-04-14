@@ -22,8 +22,8 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('', mainapp.main, name='main'),
-    path('products/', include('mainapp.urls', namespace='products',)),
-    path('auth/', include('authapp.urls', namespace='authapp',)),
+    path('products/', include('mainapp.urls', namespace='products')),
+    path('auth/', include('authapp.urls', namespace='authapp')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('admin/', include('adminapp.urls', namespace='admin')),
 
