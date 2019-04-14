@@ -52,7 +52,7 @@ def user_update(request, pk):
             return HttpResponseRedirect(reverse('admin:user_update',
                                                 args=[edit_user.pk]))
     else:
-        edit_form = ShopUserAdminEditForm(isinstance=edit_user)
+        edit_form = ShopUserAdminEditForm(instance=edit_user)
 
     ctx = {'title': title, 'update_form': edit_form,}
 
