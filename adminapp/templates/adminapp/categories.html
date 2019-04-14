@@ -10,7 +10,11 @@
             </button>
 
         {% for category in categories_list %}
-              <div class="category_record">
+              <div class="category_record
+                {% if not object.is_active %}
+                    not_active
+                {% endif %}">
+
 
                     <div class="category_name">
                       {{ category.name|title }}

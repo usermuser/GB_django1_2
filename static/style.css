@@ -3,6 +3,11 @@
 	margin: 0;
 	padding: 0;
 }
+
+.category_record.not_active {
+	opacity: 0.5;
+}
+
 .text {
 	padding-top: 20px;
 }
