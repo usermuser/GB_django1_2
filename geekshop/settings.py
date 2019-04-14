@@ -28,7 +28,7 @@ SECRET_KEY = '#%=$q_p2h-(klqt1q4a2dfg^$vgvo2&@a^5o^s78!v(7_fl+q('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['6de07d42.ngrok.io', '127.0.0.1']
+ALLOWED_HOSTS = ['6de07d42.ngrok.io', '127.0.0.1', '*']
 
 
 # Application definition
@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
+print('stat=',STATICFILES_DIRS)
 
 MEDIA_URL = '/media/'
 PROJ_DIR = os.path.dirname(BASE_DIR)
@@ -137,3 +137,5 @@ MEDIA_ROOT = os.path.join(PROJ_DIR, 'media')
 
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
+
+LOGIN_URL = '/auth/login/'

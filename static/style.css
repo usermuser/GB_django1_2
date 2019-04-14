@@ -3,6 +3,9 @@
 	margin: 0;
 	padding: 0;
 }
+.text {
+	padding-top: 20px;
+}
 
 body {
 	font-family: 'Montserrat', sans-serif;
@@ -75,7 +78,7 @@ html, body {
 	display: block;
 	width: 23px;
 	height: 23px;	
-	background-image: url(img/search.png);
+/* 	background-image: url(img/search.png); */
 	position: absolute;
 	top: 63px;
 	left: 1176px;
