@@ -7,8 +7,8 @@ from mainapp.models import ProductCategory, Product
 def users(request):
     title = 'админка/пользователи'
 
-    users_list = ShopUser.objects.all().order_by('-is_active', '-is.superuser',
-                                                 '-is.staff', 'username')
+    users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser',
+                                                 '-is_staff', 'username')
 
     ctx = {
         'title': title,
@@ -35,7 +35,10 @@ def categories(request):
 
     categoriest_list = ProductCategory.objects.all().order_by('-name')
 
-    ctx = {'categories_list': categoriest_list}
+    ctx = {
+        'categories_list': categoriest_list
+    }
+
     return render(request, 'adminapp/categories.html', ctx)
 
 def category_create(request):

@@ -30,6 +30,7 @@ urlpatterns = [
     path('seed_db', mainapp.seed_db),
     path('contact/', mainapp.contact, name='contact'),
     path('admin/', admin.site.urls),
+
 ]
 
 if settings.DEBUG:
