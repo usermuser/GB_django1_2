@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import user_passes_test
 from mainapp.models import ProductCategory, Product
 
 
-
 # R - read from CRUD
 @user_passes_test(lambda u: u.is_superuser)
 def users(request):
@@ -60,7 +59,7 @@ def user_update(request, pk):
     else:
         edit_form = ShopUserAdminEditForm(instance=edit_user)
 
-    ctx = {'title': title, 'update_form': edit_form,}
+    ctx = {'title': title, 'update_form': edit_form, }
 
     return render(request, 'adminapp/user_update.html', ctx)
 
@@ -92,6 +91,7 @@ def categories(request):
     categoriest_list = ProductCategory.objects.all().order_by('-name')
 
     ctx = {
+        'title': title,
         'categories_list': categoriest_list
     }
 
@@ -136,6 +136,8 @@ def category_update(request, pk):
     ctx = {'title': title, 'edit_form': edit_form}
 
     return render(request, 'adminapp/category_update.html', ctx)
+
+
 # D - delete from CRUD
 def category_delete(request):
     pass
