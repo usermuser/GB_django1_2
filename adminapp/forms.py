@@ -4,12 +4,14 @@ from authapp.forms import ShopUserChangeForm
 from mainapp.models import ProductCategory
 
 
+#
 class ShopUserAdminEditForm(ShopUserChangeForm):
     class Meta:
         model = ShopUser
         fields = '__all__'
 
 
+#
 class ProductCategoryEditForm(forms.ModelForm):
     class Meta:
         model = ProductCategory
