@@ -47,7 +47,7 @@ def user_create(request):
 # U - update from CRUD
 @user_passes_test(lambda u: u.is_superuser)
 def user_update(request, pk):
-    title = 'пользователи/редкатирование'
+    title = 'пользователи/редактирование'
 
     edit_user = get_object_or_404(ShopUser, pk=pk)
     if request.method == 'POST':
@@ -97,6 +97,8 @@ def categories(request):
 
     return render(request, 'adminapp/categories.html', ctx)
 
+
+@user_passes_test(lambda u: u.is_superuser)
 # C - create from CRUD
 def category_create(request):
     title = 'категории/создание'
@@ -105,22 +107,35 @@ def category_create(request):
         prod_cat_form = ProductCategoryEditForm(request.POST)
         if prod_cat_form.is_valid():
             prod_cat_form.save()
-            print('/n/n category is saved! /n//n')
             return HttpResponseRedirect(reverse('admin:categories'))
 
     else:
         prod_cat_form = ProductCategoryEditForm()
 
-    ctx = {'title': title, 'prod_cat_form': prod_cat_form,}
+    ctx = {'title': title, 'prod_cat_form': prod_cat_form}
 
     return render(request, 'adminapp/category_create.html', ctx)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 # U - update from CRUD
-def category_update(request):
-    pass
+def category_update(request, pk):
+    title = 'категории/редактирование'
 
+    edit_category = get_object_or_404(ProductCategory, pk=pk)
+    if request.method == 'POST':
+        edit_form = ProductCategoryEditForm(request.POST, instance=edit_category)
+        if edit_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('admin:category_update',
+                                                args=[edit_category.pk]))
 
+    else:
+        edit_form = ProductCategoryEditForm()
+
+    ctx = {'title': title, 'edit_form': edit_form}
+
+    return render(request, 'adminapp/category_update.html', ctx)
 # D - delete from CRUD
 def category_delete(request):
     pass
