@@ -139,8 +139,16 @@ def category_update(request, pk):
 
 
 # D - delete from CRUD
-def category_delete(request):
-    pass
+def category_delete(request, pk):
+    title = 'категории/удаление'
+    category_to_delete = get_object_or_404(ProductCategory, pk=pk)
+    if request.method == 'POST':
+        category_to_delete.is_active = False
+        category_to_delete.save()
+        return HttpResponseRedirect(reverse('admin:categories'))
+
+    ctx = {'title': title, 'category_to_delete': category_to_delete, }
+    return render(request, 'adminapp/category_delete.html', ctx)
 
 
 @user_passes_test(lambda u: u.is_superuser)

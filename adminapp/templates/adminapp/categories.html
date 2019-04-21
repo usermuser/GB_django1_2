@@ -18,6 +18,11 @@
                     <br><br>
                     <div class="category_name">
                       category name: {{ category.name|title }}
+                        {% if category.is_active %}
+                            <p>Active</p>
+                        {% else %}
+                            <p>Not Active</p>
+                        {% endif %}
                     </div>
 
                     <div class="category_desc">
