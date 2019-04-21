@@ -10,24 +10,28 @@
             </button>
 
         {% for category in categories_list %}
-              <div class="category_record">
-{#                {% if not category.is_active %}#}
-{#                    not_active#}
-{#                {% endif %}">#}
+              <div class="category_record
+                {% if not category.is_active %}
+                    not_active
+                {% endif %}">
+                  <hr>
 
-                    <br><br>
+                    <br>
                     <div class="category_name">
                       category name: {{ category.name|title }}
-                        {% if category.is_active %}
-                            <p>Active</p>
-                        {% else %}
-                            <p>Not Active</p>
-                        {% endif %}
+                        <p>This category is:
+                            {% if category.is_active %}
+                                Active
+                            {% else %}
+                                Not Active
+                            {% endif %}
+                        </p>
                     </div>
 
                     <div class="category_desc">
                       category description: {{ category.description|title }}
                     </div>
+                    <br>
 
                     <div class="category_actions">
                           <button>
