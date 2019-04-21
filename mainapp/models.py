@@ -7,6 +7,7 @@ class ProductCategory(models.Model):
                             unique=True)
     description = models.TextField(verbose_name='описание',
                                    blank=True)
+    is_active = models.BooleanField(verbose_name='активна', default=True)
 
     class Meta:
         ordering = ['name',]
