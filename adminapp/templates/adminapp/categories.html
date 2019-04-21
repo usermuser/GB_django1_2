@@ -11,20 +11,21 @@
 
         {% for category in categories_list %}
               <div class="category_record
-                {% if not category.is_active %}
-                    not_active
-                {% endif %}">
-                  <hr>
-
+                    {% if category.is_active %}
+                        active
+                    {% endif %}">
+                    <hr>
                     <br>
                     <div class="category_name">
                       category name: {{ category.name|title }}
                         <p>This category is:
-                            {% if category.is_active %}
-                                Active
-                            {% else %}
-                                Not Active
-                            {% endif %}
+                            <b>
+                                {% if category.is_active %}
+                                    Active
+                                {% else %}
+                                    Not Active
+                                {% endif %}
+                            </b>
                         </p>
                     </div>
 
