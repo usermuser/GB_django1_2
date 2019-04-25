@@ -3,7 +3,7 @@ from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
 from authapp.models import ShopUser
 from authapp.forms import ShopUserRegisterForm
-from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm
+from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, ProductEditForm
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import user_passes_test
 from mainapp.models import ProductCategory, Product
@@ -98,8 +98,7 @@ def categories(request):
     return render(request, 'adminapp/categories.html', ctx)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-# C - create from CRUD
+# C - create from CRUD@user_passes_test(lambda u: u.is_superuser)
 def category_create(request):
     title = 'категории/создание'
 
@@ -107,7 +106,8 @@ def category_create(request):
         prod_cat_form = ProductCategoryEditForm(request.POST)
         if prod_cat_form.is_valid():
             prod_cat_form.save()
-            return HttpResponseRedirect(reverse('admin:categories'))
+            return HttpResponseRedirect(reverse('adminapp:categories'))
+                                      # reverse('urlname')
 
     else:
         prod_cat_form = ProductCategoryEditForm()
@@ -117,8 +117,8 @@ def category_create(request):
     return render(request, 'adminapp/category_create.html', ctx)
 
 
-@user_passes_test(lambda u: u.is_superuser)
 # U - update from CRUD
+@user_passes_test(lambda u: u.is_superuser)
 def category_update(request, pk):
     title = 'категории/редактирование'
 
@@ -167,8 +167,23 @@ def products(request, pk):  # note that is category pk!
     return render(request, 'adminapp/products.html', ctx)
 
 
-def product_create(request, pk):
-    pass
+def product_create(request, pk): # pk=category.pk
+    title = 'товар/создать'
+    _category = get_object_or_404(ProductCategory, pk=pk)
+
+    if request.method == 'POST':
+
+        product_form = ProductEditForm(request.POST)
+        if product_form.is_valid():
+            product_form.save()
+            print('yeeppeeeee')
+            return HttpResponseRedirect(reverse('admin:products'), args=[_category.pk])
+
+    else:
+        product_form = ProductEditForm()
+
+    ctx = {'title': title, 'product_form': product_form, 'category': _category}
+    return render(request, 'adminapp/product_create.html', ctx)
 
 
 def product_read(request, pk):

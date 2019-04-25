@@ -26,10 +26,10 @@ urlpatterns = [
     path('auth/', include('authapp.urls', namespace='auth')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('admin/', include('adminapp.urls', namespace='admin')),
-
+                                          # namespace='somename'
     path('seed_db', mainapp.seed_db),
     path('contact/', mainapp.contact, name='contact'),
-    path('admin/', admin.site.urls),
+    path('old_admin/', admin.site.urls),
 
 ]
 
