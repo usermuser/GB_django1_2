@@ -38,6 +38,7 @@ class ProductEditForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
+        # we need to show in form available categories from db
         self._category = forms.ModelChoiceField(queryset=ProductCategory.objects.all())
         self.fields['category'] = self._category
 

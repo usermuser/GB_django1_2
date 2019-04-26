@@ -152,7 +152,7 @@ def category_delete(request, pk):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def products(request, pk):  # note that is category pk!
+def products(request, pk):  # it's category pk!
     title = 'админка/продукт'
 
     category = get_object_or_404(ProductCategory, pk=pk)
@@ -167,19 +167,15 @@ def products(request, pk):  # note that is category pk!
     return render(request, 'adminapp/products.html', ctx)
 
 
-def product_create(request, pk): # pk=category.pk
+def product_create(request, pk): # it's category.pk
     title = 'товар/создать'
     _category = get_object_or_404(ProductCategory, pk=pk)
-    print('category pk is -->', _category)
 
     if request.method == 'POST':
-        print('/n POST /n')
 
         product_form = ProductEditForm(request.POST)
         if product_form.is_valid():
-            print('form is valid -->')
             product_form.save()
-            print('category.pk -->', _category.pk)
 
             return HttpResponseRedirect(reverse('admin:products', args=[_category.pk]))
     else:
