@@ -4,11 +4,10 @@
         {% csrf_token %}
         {{ product_form.as_p }}
         <br>
-        <input class="form-control" type="submit" value="создать категорию">
+        <input class="form-control" type="submit" value="создать продукт">
     </form>
 
-    <button>
-        <a href="{% url 'admin:products' category.pk %}">back</a>
-    </button>
+    <a href="{% url 'admin:products' category.pk %}">back</a>
+
 
 {% endblock %}

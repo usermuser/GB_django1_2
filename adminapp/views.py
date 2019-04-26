@@ -170,15 +170,18 @@ def products(request, pk):  # note that is category pk!
 def product_create(request, pk): # pk=category.pk
     title = 'товар/создать'
     _category = get_object_or_404(ProductCategory, pk=pk)
+    print('category pk is -->', _category)
 
     if request.method == 'POST':
+        print('/n POST /n')
 
         product_form = ProductEditForm(request.POST)
         if product_form.is_valid():
+            print('form is valid -->')
             product_form.save()
-            print('yeeppeeeee')
-            return HttpResponseRedirect(reverse('admin:products'), args=[_category.pk])
+            print('category.pk -->', _category.pk)
 
+            return HttpResponseRedirect(reverse('admin:products', args=[_category.pk]))
     else:
         product_form = ProductEditForm()
 
