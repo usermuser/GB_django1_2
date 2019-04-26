@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+    <h1>category: {{ category }}</h1>
   <div class="products_list">
     <button class="new_product">
       <a href={% url 'admin:product_create' category.pk %}>

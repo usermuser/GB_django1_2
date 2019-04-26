@@ -2,7 +2,7 @@ import adminapp.views as adminapp
 from django.urls import path
 
 
-app_name = 'adminapp'
+app_name = 'admin'
 
 urlpatterns = [
     path('users/create/', adminapp.user_create, name='user_create'),
@@ -21,3 +21,5 @@ urlpatterns = [
     path('products/update/<int:pk>/', adminapp.product_update, name='product_update'),
     path('products/delete/<int:pk>/', adminapp.product_delete, name='product_delete'),
 ]
+
+# we use name='users' in template: {% url 'adminapp:users' %}
