@@ -1,4 +1,8 @@
+import random
+import hashlib
+
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django import forms
 
 from authapp.models import ShopUser
 
@@ -25,7 +29,6 @@ class ShopUserRegisterForm(UserCreationForm):
                 field.widget.attrs['class'] = 'form-control'
                 field.help_texts = ''
 
-
         def clean_age(self):
             data = self.cleaned_data['age']
             if data < 18:
@@ -43,6 +46,25 @@ class ShopUserRegisterForm(UserCreationForm):
             if not isinstance(data, int):
                 raise forms.ValidationError('Введите число!')
 
+        def save(self):
+            # user is creating User object and return it
+            user = super().save()
+            # user = super(ShopUserRegisterForm, self).save()
+
+            user.is_active = False
+
+            # creating salt
+            # salt = hashlib.sha1(str(random.random())).encode('utf8').hexdigest()[:6]
+            salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
+
+            # create sum with salt and user's email
+            # give this sum to hashing function
+            # using this hashing function(sha1) we creating activation key
+            user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
+
+            user.save()
+
+            return user
 
 class ShopUserChangeForm(UserChangeForm):
     class Meta:

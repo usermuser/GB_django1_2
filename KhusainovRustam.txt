@@ -52,7 +52,41 @@ https://github.com/usermuser
 
 3. Организовать выдачу сообщения об успешной отправке письма с кодом подтверждения в окне
 регистрации пользователя.
-Делаю.
+
+
+Получаю ошибку
+
+NoReverseMatch at /auth/register/
+Reverse for 'verify' with keyword arguments '{'email': 'dfdf@dfdf.ru', 'activation_key': 'ne rabotaet'}'
+not found. 1 pattern(s) tried: ['auth/verify/(?P<email>.+)/(?P<activation_key>\\w+)/$']
+
+вместо 'ne rabotaet' я получал '', то есть пустую строку,
+пока не решил эту проблему
+пока искал, нашел несолько своих опечаток, исправил, но эта ошибка пока не ушла.
+почему activation_key пустой?
+проверил в трйэсбеке local vars
+из формы регистрации user передается,
+
+ВОТ ПОСТ ЗАПРОС ИЗ ТРЕЙСБЭКА:
+
+csrfmiddlewaretoken 'UarY5U3CUqKhsdt7y1jNKwNprULUPz47tuCm1UK40sTboZHhPSdyYr9qIFREEvkb'
+username'user21'
+first_name'user21'
+password1'geekbrains'
+password2'geekbrains'
+email'dfdf@dfdf.ru'
+age'111'
+avatar''
+
+форма как будто рабочая.
+
+заменил строчку verify_link на строчку из методички (без kwargs)
+та же ошибка
+django.urls.exceptions.NoReverseMatch: Reverse for 'verify'
+with arguments '('dfdf@dfdf.ru', '')' not found. 1 pattern(s) tried: ['auth/verify/(?P<email>.+)/(?P<activation_key>\\w+)/$']
+
+пересмотрю урок...
+
 
 4. Реализовать активацию пользователя при переходе по ссылке из письма.
 Делаю

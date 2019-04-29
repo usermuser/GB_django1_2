@@ -1,7 +1,34 @@
 from django.shortcuts import render, HttpResponseRedirect
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
+from django.core.mail import send_mail
+from django.conf import settings
 from django.contrib import auth
 from django.urls import reverse
+
+from authapp.models import ShopUser
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
+
+def verify(request):
+    pass
+
+
+def send_verify_email(user):
+    '''verify_link = reverse('auth:verify', kwargs={
+                              'email': user.email,
+                              'activation_key': user.activation_key,
+                              # 'activation_key': 'ne rabotaet'
+                          })'''
+
+    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+
+    title = f'Подтверждение учетной записи {user.name}'
+
+    msg = f'Для подтверждения учетной записи {user.usernam} на портале \
+        {settings.DOMAIN_NAME} перейдите по ссылке: \
+        \n{settings.DOMAIN_NAME}{verify_link}'
+
+    # send_mail function returning quantity of sent messages
+    return send_mail(title, msg, settings.EMAIL_HOST_USER, [user.email],
+                     fail_silently=False)
 
 
 def login(request):
@@ -42,16 +69,26 @@ def register(request):
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
 
         if register_form.is_valid():
-            register_form.save()
-            return HttpResponseRedirect(reverse('authapp:login'))
-    else:
-        register_form = ShopUserRegisterForm
+            print('\n\n register form will be saved \n\n')
+            user = register_form.save()
+            print('\n\n register form is saved \n\n')
+            print('user.email: ', user.email)
+            print('user.actkey: ', user.activation_key)
+            if send_verify_email(user):
+                print('сообщение подтверждения отправлено')
+                return HttpResponseRedirect(reverse('main:index'))
+            else:
+                print('Ошибка отправки сообщения')
+                return HttpResponseRedirect(reverse('auth:login'))
+        else:
+            register_form = ShopUserRegisterForm()
+            ctx = {'title': title, 'register_form': register_form,}
+            return render(request, 'authapp/register.html', ctx)
 
-
-    ctx = {'title': title, 'register_form': register_form}
-
+    # register_form = ShopUserRegisterForm
+    # ctx = {'title': title, 'register_form': register_form}
+    ctx = {'title': title,}
     return render(request, 'authapp/register.html', ctx)
-
 
 
 def edit(request):
