@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import auth
 from django.urls import reverse
+from django.http import HttpResponse, HttpResponseNotFound
 
 from authapp.models import ShopUser
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
@@ -12,13 +13,16 @@ def verify(request):
 
 
 def send_verify_email(user):
-    '''verify_link = reverse('auth:verify', kwargs={
+    print(f'user.email is {user.email} and actkey is {user.activation_key}') # почему тут ключ пуст?
+    verify_link = reverse('auth:verify', kwargs={
                               'email': user.email,
-                              'activation_key': user.activation_key,
+                              'activation_key': user.activation_key
                               # 'activation_key': 'ne rabotaet'
-                          })'''
+                          })
 
-    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+
+
+    # verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
 
     title = f'Подтверждение учетной записи {user.name}'
 
@@ -64,32 +68,31 @@ def logout(request):
 
 def register(request):
     title = 'регистрация'
-
     if request.method == 'POST':
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
-
         if register_form.is_valid():
-            print('\n\n register form will be saved \n\n')
+            print('form is valid')
+
             user = register_form.save()
-            print('\n\n register form is saved \n\n')
+            print('form is saved')
+
             print('user.email: ', user.email)
-            print('user.actkey: ', user.activation_key)
+            print('user.actkey: ', user.activation_key) # вот тут пусто
+
             if send_verify_email(user):
                 print('сообщение подтверждения отправлено')
-                return HttpResponseRedirect(reverse('main:index'))
+                # return HttpResponseRedirect(reverse('main')) # разное пробовал тут
+                # return HttpResponseRedirect(reverse('auth:login'))
+                return HttpResponse('<h1> Message sent succesfully </h1>')
             else:
                 print('Ошибка отправки сообщения')
                 return HttpResponseRedirect(reverse('auth:login'))
-        else:
-            register_form = ShopUserRegisterForm()
-            ctx = {'title': title, 'register_form': register_form,}
-            return render(request, 'authapp/register.html', ctx)
+    else:
+        register_form = ShopUserRegisterForm()
 
-    # register_form = ShopUserRegisterForm
-    # ctx = {'title': title, 'register_form': register_form}
-    ctx = {'title': title,}
+    ctx = {'title': title, 'register_form': register_form,}
+
     return render(request, 'authapp/register.html', ctx)
-
 
 def edit(request):
     title = 'редактирование'

@@ -57,10 +57,10 @@ https://github.com/usermuser
 Получаю ошибку
 
 NoReverseMatch at /auth/register/
-Reverse for 'verify' with keyword arguments '{'email': 'dfdf@dfdf.ru', 'activation_key': 'ne rabotaet'}'
+Reverse for 'verify' with keyword arguments '{'email': 'dfdf@dfdf.ru', 'activation_key': ''}' << вот тут пусто!
 not found. 1 pattern(s) tried: ['auth/verify/(?P<email>.+)/(?P<activation_key>\\w+)/$']
 
-вместо 'ne rabotaet' я получал '', то есть пустую строку,
+получаю '', то есть пустую строку,
 пока не решил эту проблему
 пока искал, нашел несолько своих опечаток, исправил, но эта ошибка пока не ушла.
 почему activation_key пустой?
@@ -83,16 +83,25 @@ avatar''
 заменил строчку verify_link на строчку из методички (без kwargs)
 та же ошибка
 django.urls.exceptions.NoReverseMatch: Reverse for 'verify'
-with arguments '('dfdf@dfdf.ru', '')' not found. 1 pattern(s) tried: ['auth/verify/(?P<email>.+)/(?P<activation_key>\\w+)/$']
+with arguments '('dfdf@dfdf.ru', '')' not found. 1 pattern(s)
+tried: ['auth/verify/(?P<email>.+)/(?P<activation_key>\\w+)/$']
 
 пересмотрю урок...
 
+удалось локализовать проблему, в форме ShopUserRegisterForm,
+
+даже если в ручную кладу число 246 в user.activation_key
+при сохранении все равно этот ключ пуст
+
+Я не смог пока решить эту проблему,
+
+
 
 4. Реализовать активацию пользователя при переходе по ссылке из письма.
-Делаю
+Не сделал.
 
 5. Создать контекстный процессор для корзины и скорректировать код контроллеров основного
 приложения.
-Делаю.
+Не сделал.
 
 # ===================================
