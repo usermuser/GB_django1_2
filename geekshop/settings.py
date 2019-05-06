@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 # ...os.path.dirname(BASE_DIR)
 
 
-import os
+import os, json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,13 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#%=$q_p2h-(klqt1q4a2dfg^$vgvo2&@a^5o^s78!v(7_fl+q('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '*']
+
 
 
 # Application definition
@@ -44,6 +42,7 @@ INSTALLED_APPS = [
     'authapp.apps.AuthappConfig',
     'basket.apps.BasketConfig',
     'adminapp.apps.AdminappConfig',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +130,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-print('stat=',STATICFILES_DIRS)
+# print('stat=',STATICFILES_DIRS)
 
 MEDIA_URL = '/media/'
 PROJ_DIR = os.path.dirname(BASE_DIR)
@@ -160,4 +159,31 @@ DOMAIN_NAME = 'http://localhost:8000'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/email-messages/'
 
-# =============================================
+
+
+# ==============    VK    ============================
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.vk.VKOAuth2',
+)
+
+with open('docs/json/vk.json', 'r') as f:
+    VK = json.load(f)
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = VK['SOCIAL_AUTH_VK_OAUTH2_KEY']
+SOCIAL_AUTH_VK_OAUTH2_SECRET = VK['SOCIAL_AUTH_VK_OAUTH2_SECRET']
+
+
+
+# ============== LOCAL SETTINGS ========================
+
+
+try:
+    from geekshop.local_settings import *
+    print('[+] local settings loaded succesfully')
+    print(f'DEBUG is: {DEBUG}')
+except Exception as e:
+    print(f' Houston! we have a problem: {e.args}')
+    print('[-] local settings not loaded')
