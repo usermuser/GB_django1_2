@@ -2,7 +2,7 @@ import adminapp.views as adminapp
 from django.urls import path
 
 
-app_name = 'admin'
+app_name = 'adminapp'
 
 urlpatterns = [
     path('users/create/', adminapp.user_create, name='user_create'),
