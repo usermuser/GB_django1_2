@@ -21,12 +21,11 @@ def send_verify_email(user):
                           })
 
 
-
     # verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
 
-    title = f'Подтверждение учетной записи {user.name}'
+    title = f'Подтверждение учетной записи {user.username}'
 
-    msg = f'Для подтверждения учетной записи {user.usernam} на портале \
+    msg = f'Для подтверждения учетной записи {user.username} на портале \
         {settings.DOMAIN_NAME} перейдите по ссылке: \
         \n{settings.DOMAIN_NAME}{verify_link}'
 
