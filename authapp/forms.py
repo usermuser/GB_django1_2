@@ -50,31 +50,16 @@ class ShopUserRegisterForm(UserCreationForm):
 
 
     def save(self):
-        user = super().save() # этот вариант пробовал, проблему не решило
+        user = super().save()
         # user = super(ShopUserRegisterForm, self).save()
 
         user.is_active = False
 
         # creating salt
         salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
-
         user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
-        # user.activation_key = '246' # положим сюда 246
-        print('Думаю тут будет пусто:', user.activation_key) # эта строчка не печатается
         user.save()
-
         return user
-
-# это скопировал из методички и это тоже не помогло
-#         def save(self):
-#             user = super(ShopUserRegisterForm, self).save()
-#
-#             user.is_active = False
-#             salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
-#             user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
-#             user.save()
-#
-#             return user
 
 
 class ShopUserChangeForm(UserChangeForm):

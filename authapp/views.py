@@ -8,20 +8,28 @@ from django.http import HttpResponse, HttpResponseNotFound
 from authapp.models import ShopUser
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
 
-def verify(request):
-    pass
+
+def verify(request, email, activation_key):
+    try:
+        user = ShopUser.objects.get(email=email)
+        if user.activation_key == activation_key and not user.is_activation_key_expired():
+            user.is_active = True
+            user.save()
+            auth.login(request, user)
+            return render(request, 'authapp/verification.html')
+        else:
+            print(f'error activation user: {user}')
+            return render(request, 'authapp/verification.html')
+    except Exception as e:
+        print(f'error activation user: {e.args}')
+        return HttpResponseRedirect(reverse('mainapp:index'))
 
 
 def send_verify_email(user):
-    print(f'user.email is {user.email} and actkey is {user.activation_key}') # почему тут ключ пуст?
     verify_link = reverse('auth:verify', kwargs={
                               'email': user.email,
                               'activation_key': user.activation_key
-                              # 'activation_key': 'ne rabotaet'
                           })
-
-
-    # verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
 
     title = f'Подтверждение учетной записи {user.username}'
 
@@ -36,9 +44,7 @@ def send_verify_email(user):
 
 def login(request):
     title = 'вход'
-
     login_form = ShopUserLoginForm(data=request.POST)
-
     next = request.GET['next'] if 'next' in request.GET.keys() else ''
 
     if request.method == 'POST' and login_form.is_valid():
@@ -56,7 +62,6 @@ def login(request):
     ctx = {'title': title,
            'login_form': login_form,
            'next': next,}
-
     return render(request, 'authapp/login.html', ctx)
 
 
@@ -70,19 +75,12 @@ def register(request):
     if request.method == 'POST':
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
         if register_form.is_valid():
-            print('form is valid')
 
             user = register_form.save()
-            print('form is saved')
-
-            print('user.email: ', user.email)
-            print('user.actkey: ', user.activation_key) # вот тут пусто
 
             if send_verify_email(user):
                 print('сообщение подтверждения отправлено')
-                # return HttpResponseRedirect(reverse('main')) # разное пробовал тут
-                # return HttpResponseRedirect(reverse('auth:login'))
-                return HttpResponse('<h1> Message sent succesfully </h1>')
+                return HttpResponseRedirect(reverse('mainapp:index'))
             else:
                 print('Ошибка отправки сообщения')
                 return HttpResponseRedirect(reverse('auth:login'))
@@ -90,7 +88,6 @@ def register(request):
         register_form = ShopUserRegisterForm()
 
     ctx = {'title': title, 'register_form': register_form,}
-
     return render(request, 'authapp/register.html', ctx)
 
 def edit(request):
