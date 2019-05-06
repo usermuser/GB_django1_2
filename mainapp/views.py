@@ -68,7 +68,8 @@ def products(request, pk=None):
             'links_menu': links_menu,
             'hot_product': hot_product,
             'same_products': same_products,
-            'basket': basket,}
+            # 'basket': basket,
+           }
 
     return render(request, 'mainapp/products_list.html', ctx)
 
@@ -80,9 +81,10 @@ def product(request, pk):
         'title': title,
         'links_menu': ProductCategory.objects.all(),
         'product': get_object_or_404(Product, pk=pk),
-        'basket': get_basket(request.user),
+        # 'basket': get_basket(request.user),
     }
     return render(request, 'mainapp/product.html', ctx)
+
 
 def seed_db(request): # это код больше не нужен, делаю через management
     ProductCategory.objects.all().delete()
@@ -114,7 +116,7 @@ def seed_db(request): # это код больше не нужен, делаю �
     return HttpResponse('<h1> Done! </h1> ')
 
 
-
+# разобраться что это за хвост и либо убрать либо написать причину
 # def categories(request, pk=None):
 #     if pk is None:
 #         return HttpResponseRedirect('/')
@@ -131,7 +133,8 @@ def main(request):
     ctx = {'title': title,
            'current_year': current_year,
            'current_url': current_url,
-           'products': products}
+           'products': products,
+           }
 
     return render(request, 'mainapp/index.html', ctx)
 
@@ -140,6 +143,7 @@ def contact(request):
     title = 'Контакты'
 
     ctx = {'title': title,
-           'current_year': current_year, }
+           'current_year': current_year,
+           }
 
     return render(request, 'mainapp/contact.html', ctx)
