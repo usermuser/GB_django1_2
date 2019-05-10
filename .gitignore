@@ -6,10 +6,11 @@ __pycache__/
 # my stuff:
 .idea/
 docs/
-docs/json/
+docs/json/vk.json
 tmp/
 TODO.txt
 geekshop/local_settings.py
+
 
 # C extensions
 *.so
