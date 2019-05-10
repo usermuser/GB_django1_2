@@ -44,20 +44,22 @@ def send_verify_email(user):
 
 def login(request):
     title = 'вход'
-    login_form = ShopUserLoginForm(data=request.POST)
+    login_form = ''
     next = request.GET['next'] if 'next' in request.GET.keys() else ''
 
-    if request.method == 'POST' and login_form.is_valid():
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.method == 'POST':
+        login_form = ShopUserLoginForm(data=request.POST)
+        if login_form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
 
-        user = auth.authenticate(username=username, password=password)
-        if user and user.is_active:
-            auth.login(request, user)
-            if 'next' in request.POST.keys():
-                return HttpResponseRedirect(request.POST['next'])
-            else:
-                return HttpResponseRedirect(reverse('mainapp:index'))
+            user = auth.authenticate(username=username, password=password)
+            if user and user.is_active:
+                auth.login(request, user)
+                if 'next' in request.POST.keys():
+                    return HttpResponseRedirect(request.POST['next'])
+                else:
+                    return HttpResponseRedirect(reverse('mainapp:index'))
 
     ctx = {'title': title,
            'login_form': login_form,
