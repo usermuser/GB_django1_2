@@ -144,7 +144,7 @@ LOGIN_URL = '/auth/login/'
 
 # ===================== EMAIL ================
 
-DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://127.0.0.1:8000'
 #
 # EMAIL_HOST = 'localhost'
 # EMAIL_PORT = '25'
@@ -168,6 +168,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.vk.VKOAuth2',
 )
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 with open('docs/json/vk.json', 'r') as f:
     VK = json.load(f)

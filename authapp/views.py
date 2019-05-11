@@ -49,6 +49,8 @@ def login(request):
 
     if request.method == 'POST':
         login_form = ShopUserLoginForm(data=request.POST)
+        #login_form = ShopUserLoginForm(data=request.POST or None)
+
         if login_form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
