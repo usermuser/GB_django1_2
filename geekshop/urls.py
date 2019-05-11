@@ -14,22 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 import mainapp.views as mainapp
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include
 
 urlpatterns = [
-    path('', mainapp.main, name='main'),
+    re_path(r'^$', mainapp.main, name='main'),
     path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='auth')),
     path('basket/', include('basket.urls', namespace='basket')),
-    path('admin/', include('adminapp.urls', namespace='admin')),
+    path('admin/', include('adminapp.urls', namespace='adminapp')),
                                           # namespace='somename'
     path('seed_db', mainapp.seed_db),
     path('contact/', mainapp.contact, name='contact'),
-    path('old_admin/', admin.site.urls),
+    path('django_admin/', admin.site.urls, name='django_admin'),
 
 ]
 

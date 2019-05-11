@@ -2,7 +2,7 @@
     <a href="/" class="logo"></a>
     <ul class="menu">
 
-        <li><a href="{% url 'main' %}"
+        <li><a href="{% url 'mainapp:index' %}"
                class="{% if request.path == '/' %}active{% endif %}">домой
             </a>
         </li>
@@ -40,6 +40,14 @@
               <a href="{% url 'auth:logout' %}">выйти</a>
             {% else %}
               <a href="{% url 'auth:login' %}">войти</a>
+            {% endif %}
+        </li>
+
+        <li>
+            {% if basket %}
+            <a href="{% url 'basket:view' %}"> в корзине: {{ basket|length }} товаров</a>
+            {% else %}
+            <a href="{% url 'basket:view' %}"> грустная пустая корзина</a>
             {% endif %}
         </li>
 

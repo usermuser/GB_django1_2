@@ -67,7 +67,6 @@ def basket_edit(request, pk, quantity):
         basket_items = Basket.objects.filter(user=request.user).\
                                         order_by('product__category')
 
-
         ctx = {
             'basket_items': basket_items,
         }
