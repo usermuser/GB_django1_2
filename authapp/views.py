@@ -8,6 +8,9 @@ from django.http import HttpResponse, HttpResponseNotFound
 from authapp.models import ShopUser
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
 
+from django.db import transaction
+from authapp.forms import ShopUserProfileEditForm
+
 
 def verify(request, email, activation_key):
     try:
@@ -94,19 +97,19 @@ def register(request):
     ctx = {'title': title, 'register_form': register_form,}
     return render(request, 'authapp/register.html', ctx)
 
+
 def edit(request):
     title = 'редактирование'
 
     if request.method == 'POST':
         edit_form = ShopUserChangeForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
+        profile_form = ShopUserProfileEditForm(request.POST, request.FILES, instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and profile_form.is_valid():
             edit_form.save()
             return HttpResponseRedirect(reverse('authapp:edit'))
     else:
         edit_form = ShopUserChangeForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
-    ctx = {'title': title, 'edit_form': edit_form}
-
+    ctx = {'title': title, 'edit_form': edit_form, 'profile_form': profile_form, }
     return render(request, 'authapp/edit.html', ctx)
-
-
