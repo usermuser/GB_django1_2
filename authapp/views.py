@@ -44,7 +44,7 @@ def send_verify_email(user):
 
 def login(request):
     title = 'вход'
-    login_form = ''
+    login_form = ShopUserLoginForm()
     next = request.GET['next'] if 'next' in request.GET.keys() else ''
 
     if request.method == 'POST':
