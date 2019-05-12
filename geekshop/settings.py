@@ -136,8 +136,8 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 PROJ_DIR = os.path.dirname(BASE_DIR)
 MEDIA_ROOT = os.path.join(PROJ_DIR, 'media')
-print('media root: ',MEDIA_ROOT)
-print('media url: ', MEDIA_URL)
+# print('media root: ',MEDIA_ROOT)
+# print('media url: ', MEDIA_URL)
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
 
@@ -179,7 +179,7 @@ with open('docs/json/vk.json', 'r') as f:
 SOCIAL_AUTH_VK_OAUTH2_KEY = VK['SOCIAL_AUTH_VK_OAUTH2_KEY']
 SOCIAL_AUTH_VK_OAUTH2_SECRET = VK['SOCIAL_AUTH_VK_OAUTH2_SECRET']
 
-LOGIN_ERROR_URL = '/'
+LOGIN_ERROR_URL = '/404'
 
 
 SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCOPE = True
@@ -215,5 +215,5 @@ except Exception as e:
 
 # enable social_django exception catcher to work
 DEBUG = True
-# if 'social_django.middleware.SocialAuthExceptionMiddleware' in MIDDLEWARE:
-#     DEBUG = False
+if 'social_django.middleware.SocialAuthExceptionMiddleware' in MIDDLEWARE:
+    DEBUG = False

@@ -98,6 +98,7 @@ def register(request):
     return render(request, 'authapp/register.html', ctx)
 
 
+@transaction.atomic
 def edit(request):
     title = 'редактирование'
 
