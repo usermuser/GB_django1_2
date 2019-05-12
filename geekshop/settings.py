@@ -27,8 +27,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = False
 
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -212,3 +210,10 @@ try:
 except Exception as e:
     print(f' Houston! we have a problem: {e.args}')
     print('[-] local settings not loaded')
+
+
+
+# enable social_django exception catcher to work
+DEBUG = True
+# if 'social_django.middleware.SocialAuthExceptionMiddleware' in MIDDLEWARE:
+#     DEBUG = False
