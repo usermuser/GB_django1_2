@@ -15,8 +15,13 @@
 
     <br>
 
-    <button class="btn btn-round form-control">
-            <a href="{% url 'authapp:register' %}" class=""> зарегистрироваться </a>
-    </button>
+
+    <a href="{% url 'authapp:register' %}"
+       class="btn btn-outline-success"> Зарегистрироваться </a>
+
+    <a href="{% url 'social:begin' 'vk-oauth2' %}?next=/"
+       class="btn btn-outline-info"> Вход через VK </a>
+
+
 
 {% endblock %}

@@ -3,8 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# pycharm stuff:
+# my stuff:
 .idea/
+docs/
+tmp/
+TODO.txt
+geekshop/local_settings.py
+
 
 # C extensions
 *.so

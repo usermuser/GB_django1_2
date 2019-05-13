@@ -6,6 +6,6 @@ def basket(request):
 
     if request.user.is_authenticated:
         basket = Basket.objects.filter(user=request.user)
-        print('basket:', basket)
+        # print('basket:', basket)
 
     return {'basket': basket, }

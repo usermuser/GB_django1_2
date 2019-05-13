@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 # ...os.path.dirname(BASE_DIR)
 
 
-import os
+import os, json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,13 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#%=$q_p2h-(klqt1q4a2dfg^$vgvo2&@a^5o^s78!v(7_fl+q('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1', '*']
+DEBUG = False
 
 
 # Application definition
@@ -44,6 +40,7 @@ INSTALLED_APPS = [
     'authapp.apps.AuthappConfig',
     'basket.apps.BasketConfig',
     'adminapp.apps.AdminappConfig',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'geekshop.urls'
@@ -70,6 +68,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'mainapp.context_processors.basket',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -131,12 +131,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-print('stat=',STATICFILES_DIRS)
+# print('stat=',STATICFILES_DIRS)
 
 MEDIA_URL = '/media/'
 PROJ_DIR = os.path.dirname(BASE_DIR)
 MEDIA_ROOT = os.path.join(PROJ_DIR, 'media')
-
+# print('media root: ',MEDIA_ROOT)
+# print('media url: ', MEDIA_URL)
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
 
@@ -145,7 +146,7 @@ LOGIN_URL = '/auth/login/'
 
 # ===================== EMAIL ================
 
-DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://127.0.0.1:8000'
 #
 # EMAIL_HOST = 'localhost'
 # EMAIL_PORT = '25'
@@ -160,4 +161,59 @@ DOMAIN_NAME = 'http://localhost:8000'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/email-messages/'
 
-# =============================================
+
+
+# ==============    VK    ============================
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.vk.VKOAuth2',
+)
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+with open('docs/json/vk.json', 'r') as f:
+    VK = json.load(f)
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = VK['SOCIAL_AUTH_VK_OAUTH2_KEY']
+SOCIAL_AUTH_VK_OAUTH2_SECRET = VK['SOCIAL_AUTH_VK_OAUTH2_SECRET']
+
+LOGIN_ERROR_URL = '/404'
+
+
+SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
+
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.create_user',
+    'authapp.pipeline.save_user_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
+
+
+# ============== LOCAL SETTINGS ========================
+
+
+try:
+    from geekshop.local_settings import *
+    print('[+] local settings loaded succesfully')
+    print(f'DEBUG is: {DEBUG}')
+except Exception as e:
+    print(f' Houston! we have a problem: {e.args}')
+    print('[-] local settings not loaded')
+
+
+
+# enable social_django exception catcher to work
+DEBUG = True
+if 'social_django.middleware.SocialAuthExceptionMiddleware' in MIDDLEWARE:
+    DEBUG = False
