@@ -26,7 +26,8 @@ urlpatterns = [
     path('auth/', include('authapp.urls', namespace='auth')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('admin/', include('adminapp.urls', namespace='adminapp')),
-                                          # namespace='somename'
+    path('auth/verify/', include('social_django.urls', namespace='social')),
+
     path('seed_db', mainapp.seed_db),
     path('contact/', mainapp.contact, name='contact'),
     path('django_admin/', admin.site.urls, name='django_admin'),

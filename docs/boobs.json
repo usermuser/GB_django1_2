@@ -1,7 +1,0 @@
-[
-  {"cat_name": "каталогг111", "cat_description": "1111", 'prod_name': "товар1 1","prod_description": "това1 опис"},
-  {"cat_name": "каталогг222", "cat_description": "2222", 'prod_name': "товар22","prod_description": "това22 опис"},
-  {"cat_name": "каталогг3", "cat_description": "3333", 'prod_name': "това3","prod_description": "това333 опис"},
-  {"cat_name": "каталогг44", "cat_description": "44444", 'prod_name': "това44","prod_description": "това44 опис"},
-
-]
