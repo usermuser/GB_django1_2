@@ -23,10 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -203,6 +199,12 @@ SOCIAL_AUTH_PIPELINE = (
 # ============== LOCAL SETTINGS ========================
 
 
+# SECURITY WARNING: don't run with debug turned on in production!
+# social_django exception catcher to work only when DEBUG is False
+DEBUG = True
+# if 'social_django.middleware.SocialAuthExceptionMiddleware' in MIDDLEWARE:
+#     DEBUG = False
+
 try:
     from geekshop.local_settings import *
     print('[+] local settings loaded succesfully')
@@ -212,8 +214,3 @@ except Exception as e:
     print('[-] local settings not loaded')
 
 
-
-# enable social_django exception catcher to work
-DEBUG = True
-if 'social_django.middleware.SocialAuthExceptionMiddleware' in MIDDLEWARE:
-    DEBUG = False

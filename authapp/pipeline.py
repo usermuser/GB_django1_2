@@ -40,7 +40,7 @@ def save_user_profile(backend, user, response, *args, **kwargs):
             # вроде как страну не всегда можно узнать, значит принимаем по дефолтку дд.мм.гг.
             age = timezone.now().date().year - bdate.year
 
-            if age < 1800:
+            if age < 18:
                 user.delete()
 
                 # raise AuthForbidden('social_core.backends.vk.VKOAuth2')
