@@ -6,6 +6,6 @@ from ordersapp import views
 app_name = 'ordersapp'
 
 urlpatterns = [
-    re_path(r'^orders_all', views.ordering_main, name='orders_all'),
+    re_path(r'^orders_all', views.OrderList.as_view(), name='orders_all'),
 
 ]
